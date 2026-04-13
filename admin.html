@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Админка | Портфолио</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .admin-wrap { max-width: 800px; margin: 0 auto; padding: 16px; }
+    .login-box, .panel { background: var(--card-bg); padding: 24px; border-radius: var(--radius); box-shadow: var(--shadow); }
+    .panel { display: none; }
+    input, textarea {
+      width: 100%; padding: 14px; margin: 8px 0 16px;
+      border: 1px solid var(--border); border-radius: 10px;
+      background: var(--bg); color: var(--text); font-size: 16px;
+    }
+    textarea { min-height: 160px; font-family: ui-monospace, SFMono-Regular, monospace; font-size: 13px; resize: vertical; }
+    .form-group { margin-bottom: 8px; }
+    .row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+    .btn-sm { flex: 1; padding: 14px; border: none; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 15px; }
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-danger { background: #ef4444; color: white; }
+    .btn-secondary { background: var(--border); color: var(--text); }
+    .item-list { margin-top: 24px; }
+    .item { background: var(--bg); padding: 14px; border-radius: 10px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+    .item span { font-weight: 500; word-break: break-word; }
+    .item button { background: none; border: 1px solid var(--border); padding: 8px 12px; border-radius: 8px; cursor: pointer; color: var(--text); font-size: 18px; }
+    .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: #10b981; color: white; padding: 12px 24px; border-radius: 30px; opacity: 0; transition: 0.3s; pointer-events: none; font-weight: 500; }
+    .toast.show { opacity: 1; }
+  </style>
+</head>
+<body>
+  <div class="admin-wrap">
+    <div id="loginBox" class="login-box">
+      <h2>🔐 Доступ закрыт</h2>
+      <p style="margin: 8px 0 16px; opacity: 0.8; font-size: 0.9rem;">Введите пароль для входа</p>
+      <input type="password" id="passInput" placeholder="Пароль">
+      <button class="btn btn-primary" id="loginBtn">Войти</button>
+      <p id="loginError" style="color:#ef4444; margin-top:8px; display:none;">Неверный пароль</p>
+    </div>
+
+    <div id="adminPanel" class="panel">
+      <h2>🛠 Редактор проектов</h2>
+      <div class="form-group">
+        <input type="hidden" id="editId">
+        <input type="text" id="title" placeholder="Название проекта">
+        <input type="text" id="desc" placeholder="Краткое описание">
+        <input type="text" id="tags" placeholder="Теги (через запятую)">
+        <input type="text" id="imgUrl" placeholder="Ссылка на обложку">
+        <input type="text" id="link" placeholder="Ссылка на проект">
+      </div>
+      <div class="row">
+        <button class="btn-sm btn-primary" id="saveBtn">➕ Добавить</button>
+        <button class="btn-sm btn-secondary" id="clearBtn">🧹 Очистить</button>
+      </div>
+
+      <h3 style="margin-top:24px; font-size:1.1rem;">Список проектов</h3>
+      <div id="itemList" class="item-list"></div>
+
+      <h3 style="margin-top:32px; font-size:1.1rem;">📦 Экспорт JSON</h3>
+      <p style="margin-bottom:8px; opacity:0.8; font-size:0.9rem;">Нажмите кнопку, перейдите в GitHub, откройте <code>projects.json</code>, замените содержимое и нажмите Commit.</p>
+      <textarea id="jsonOutput" readonly></textarea>
+      <button class="btn btn-primary" id="copyBtn" style="margin-top:12px; width:100%;">📋 Скопировать JSON</button>
+    </div>
+  </div>
+  <div id="toast" class="toast">Скопировано в буфер!</div>
+  <script src="admin.js"></script>
+</body>
+</html>
