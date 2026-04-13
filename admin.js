@@ -1,4 +1,4 @@
-const PASS_HASH = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918";
+const PASS_HASH = "48433b19d4cf3958b6f40338a6eb616dec641477bb4de7904f5ab4859cd95e06";
 let projects = [];
 
 document.addEventListener('DOMContentLoaded', async () => {
