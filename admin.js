@@ -1,4 +1,3 @@
-// SHA-256 хеш пароля "admin123". Замените на свой при необходимости.
 const PASS_HASH = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918";
 let projects = [];
 
