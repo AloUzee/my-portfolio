@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <meta name="theme-color" content="#2563eb">
+  <title>Моё Портфолио</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Моё Портфолио</h1>
+    <button id="themeToggle" aria-label="Переключить тему">🌓</button>
+  </header>
+  <main>
+    <div id="loader" class="loader">Загрузка проектов...</div>
+    <div id="error" class="error hidden"></div>
+    <div id="projectsGrid" class="grid"></div>
+  </main>
+  <footer>
+    <p>© <span id="year"></span> Портфолио. Связаться: <a href="mailto:your@email.com">your@email.com</a></p>
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>
