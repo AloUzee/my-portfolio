@@ -1,57 +1,127 @@
-document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('year').textContent = new Date().getFullYear();
-  initTheme();
-  loadProjects();
-});
-
-function initTheme() {
-  const saved = localStorage.getItem('theme');
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  if (saved === 'dark' || (!saved && prefersDark)) {
-    document.documentElement.setAttribute('data-theme', 'dark');
+// Portfolio Data (встроено для работы на GitHub Pages)
+const defaultProjects = [
+  {
+    id: 1,
+    title: "PIK-R SMAN 1 Mengwi",
+    description: "PIK-R (Pusat Informasi dan Konseling Remaja) adalah wadah pembinaan dan pelayanan bagi remaja yang dibentuk untuk memberikan informasi, edukasi, serta layanan konseling.",
+    tech: ["HTML", "CSS", "JavaScript"],
+    image: "🏫",
+    liveUrl: "#",
+    githubUrl: "#"
+  },
+  {
+    id: 2,
+    title: "GameSmiths Studio",
+    description: "GameSmiths adalah studio game developer yang fokus di platform Roblox. Kami merupakan tim rintisan yang fokus untuk membuat game-game Roblox yang seru dan berkualitas.",
+    tech: ["Roblox", "Lua", "Game Design"],
+    image: "🎮",
+    liveUrl: "#",
+    githubUrl: "#"
+  },
+  {
+    id: 3,
+    title: "WhatsApp Clone",
+    description: "Proyek ini adalah replika visual dari antarmuka aplikasi WhatsApp, yang dibangun menggunakan HTML, CSS, dan JavaScript.",
+    tech: ["HTML", "CSS", "JavaScript"],
+    image: "💬",
+    liveUrl: "#",
+    githubUrl: "#"
   }
-  document.getElementById('themeToggle').addEventListener('click', () => {
-    const current = document.documentElement.getAttribute('data-theme');
-    const next = current === 'dark' ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', next);
-    localStorage.setItem('theme', next);
+];
+
+// Load projects
+function loadProjects() {
+  const grid = document.getElementById('projectsGrid');
+  if (!grid) return;
+  
+  // Get projects from localStorage or use default
+  let projects = JSON.parse(localStorage.getItem('portfolio_projects')) || defaultProjects;
+  
+  // Update counter
+  const projectCount = document.getElementById('projectCount');
+  if (projectCount) {
+    animateCounter(projectCount, 0, projects.length, 1000);
+  }
+  
+  // Render projects
+  if (projects.length === 0) {
+    grid.innerHTML = '<p style="text-align: center; color: #8892b0; grid-column: 1/-1; padding: 40px;">No projects yet. Add some via admin panel!</p>';
+    return;
+  }  
+  grid.innerHTML = projects.map(project => `
+    <div class="project-card">
+      <div class="project-image">${project.image || '🚀'}</div>
+      <div class="project-content">
+        <h3>${project.title}</h3>
+        <p>${project.description}</p>
+        <div class="project-tech">
+          ${project.tech.map(t => `<span class="tech-tag">${t}</span>`).join('')}
+        </div>
+        <div class="project-links">
+          ${project.liveUrl && project.liveUrl !== '#' ? `<a href="${project.liveUrl}" class="link-live" target="_blank">Live Demo</a>` : ''}
+          ${project.githubUrl && project.githubUrl !== '#' ? `<a href="${project.githubUrl}" class="link-github" target="_blank">GitHub</a>` : ''}
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// Animate counter
+function animateCounter(element, start, end, duration) {
+  const range = end - start;
+  const increment = end > start ? 1 : -1;
+  const stepTime = Math.abs(Math.floor(duration / range));
+  let current = start;
+  
+  const timer = setInterval(() => {
+    current += increment;
+    element.textContent = current;
+    if (current === end) {
+      clearInterval(timer);
+    }
+  }, stepTime);
+}
+
+// Mobile menu
+function initMobileMenu() {
+  const burger = document.querySelector('.burger');
+  const navLinks = document.querySelector('.nav-links');
+  
+  if (burger && navLinks) {
+    burger.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
+    
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('active');
+      });
+    });  }
+}
+
+// Smooth scroll
+function initSmoothScroll() {
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      const href = this.getAttribute('href');
+      if (href !== '#' && href.length > 1) {
+        e.preventDefault();
+        const target = document.querySelector(href);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+    });
   });
 }
 
-async function loadProjects() {
-  const grid = document.getElementById('projectsGrid');
-  const loader = document.getElementById('loader');
-  const error = document.getElementById('error');
-
-  try {
-    // Cache-busting чтобы всегда брать актуальную версию с сервера
-    const res = await fetch(`./projects.json?t=${Date.now()}`);
-    if (!res.ok) throw new Error('Не удалось загрузить данные');
-    const projects = await res.json();
-    loader.classList.add('hidden');
-    renderProjects(projects);
-  } catch (err) {
-    loader.classList.add('hidden');
-    error.textContent = `Ошибка: ${err.message}. Убедитесь, что projects.json загружен в репозиторий.`;
-    error.classList.remove('hidden');
-  }
-}
-
-function renderProjects(projects) {
-  const grid = document.getElementById('projectsGrid');
-  if (projects.length === 0) {
-    grid.innerHTML = '<p style="text-align:center; opacity:0.6; padding:40px;">Проектов пока нет. Добавьте их через админ-панель.</p>';
-    return;
-  }
-  grid.innerHTML = projects.map(p => `
-    <article class="card">
-      <img src="${p.image}" alt="${p.title}" loading="lazy">
-      <div class="card-content">
-        <h3>${p.title}</h3>
-        <div class="tags">${p.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
-        <p>${p.description}</p>
-        <a href="${p.link}" class="btn" target="_blank" rel="noopener">Открыть проект</a>
-      </div>
-    </article>
-  `).join('');
-}
+// Initialize
+document.addEventListener('DOMContentLoaded', () => {
+  // Set year
+  const yearEl = document.getElementById('year');
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
+  
+  loadProjects();
+  initMobileMenu();
+  initSmoothScroll();
+});
