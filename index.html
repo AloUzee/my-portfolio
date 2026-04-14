@@ -2,24 +2,134 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-  <meta name="theme-color" content="#2563eb">
-  <title>Моё Портфолио</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio - Frontend Developer</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h1>Моё Портфолио</h1>
-    <button id="themeToggle" aria-label="Переключить тему">🌓</button>
-  </header>
-  <main>
-    <div id="loader" class="loader">Загрузка проектов...</div>
-    <div id="error" class="error hidden"></div>
-    <div id="projectsGrid" class="grid"></div>
-  </main>
-  <footer>
-    <p>© <span id="year"></span> Портфолио. Связаться: <a href="mailto:your@email.com">your@email.com</a></p>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container">
+      <a href="#" class="logo">Portfolio.</a>
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="admin.html" class="btn-admin">Admin</a></li>
+      </ul>
+      <div class="burger">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="home" class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <span class="greeting">Ready to Innovate</span>
+        <h1 class="title">Frontend Developer</h1>
+        <p class="subtitle">Creating innovative, functional, and user-friendly websites for digital solutions.</p>
+        <div class="tech-stack">
+          <span class="tech-item">React</span>
+          <span class="tech-item">JavaScript</span>
+          <span class="tech-item">Node.js</span>
+          <span class="tech-item">TypeScript</span>
+        </div>
+        <div class="hero-buttons">
+          <a href="#projects" class="btn btn-primary">View Projects</a>
+          <a href="#contact" class="btn btn-secondary">Contact Me</a>
+        </div>
+      </div>
+      <div class="hero-image">
+        <div class="profile-placeholder">👨‍💻</div>
+      </div>
+    </div>
+  </section>
+  <!-- About Section -->
+  <section id="about" class="about">
+    <div class="container">
+      <h2 class="section-title">About Me</h2>
+      <div class="about-content">
+        <div class="about-text">
+          <h3>Hello, I'm <span class="highlight">Your Name</span></h3>
+          <p>I'm a frontend developer focused on creating engaging digital experiences. I strive to deliver the best solutions in every project I work on.</p>
+          <blockquote>"Leveraging AI as a professional tool, not a replacement."</blockquote>
+          <div class="about-buttons">
+            <a href="#" class="btn btn-primary">Download CV</a>
+            <a href="#projects" class="btn btn-outline">View Projects</a>
+          </div>
+        </div>
+        <div class="stats">
+          <div class="stat-card">
+            <h3 id="projectCount">0</h3>
+            <p>Projects</p>
+          </div>
+          <div class="stat-card">
+            <h3>4+</h3>
+            <p>Years Experience</p>
+          </div>
+          <div class="stat-card">
+            <h3>50+</h3>
+            <p>Happy Clients</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projects" class="projects">
+    <div class="container">
+      <h2 class="section-title">Portfolio Showcase</h2>
+      <p class="section-subtitle">Explore my journey through projects and technical expertise.</p>
+      <div id="projectsGrid" class="projects-grid">
+        <!-- Projects loaded via JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="contact">
+    <div class="container">
+      <h2 class="section-title">Get In Touch</h2>
+      <p class="section-subtitle">Have a question? Send me a message and I'll get back to you.</p>
+      
+      <div class="contact-content">        <div class="social-links">
+          <a href="mailto:your@email.com" class="social-card">
+            <span class="social-icon">📧</span>
+            <div>
+              <h4>Email</h4>
+              <p>your@email.com</p>
+            </div>
+          </a>
+          <a href="#" class="social-card">
+            <span class="social-icon">💼</span>
+            <div>
+              <h4>LinkedIn</h4>
+              <p>@yourprofile</p>
+            </div>
+          </a>
+          <a href="#" class="social-card">
+            <span class="social-icon">🐙</span>
+            <div>
+              <h4>GitHub</h4>
+              <p>@yourprofile</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; <span id="year"></span> Portfolio. Built with ❤️</p>
+    </div>
   </footer>
+
   <script src="script.js"></script>
 </body>
-</html>
+  </html>
